@@ -7,11 +7,23 @@ arg = int(sys.argv[1])
 
 
 def findHighestFactorPrimeEratosthenes(limit):
-    prime = 2
-    while prime < limit:
-        nextLimit = prime**2
-              
-    return prime
+    highestPrime = 2
+    allPrimes = []
+    while highestPrime < limit:
+        nextLimit = highestPrime**2
+        primes = set([i for i in range(highestPrime,nextLimit)])
+        print 'Current prime candidates: ' + str(primes)
+        highestPrime = max(primes)
+        for prime in primes:
+            primeMultiple = prime + prime
+            while primeMultiple < highestPrime:
+                if primeMultiple in primes:
+                    primes.remove(primeMultiple)
+                primeMultiple = prime + prime
+        highestPrime = max(primes)
+        print 'Found primes: ' + str(primes)
+        allPrimes += list(primes)
+    return allPrimes
 
 def findPrimesRaw(limit):
     primes = [2]
@@ -28,10 +40,6 @@ def findPrimesRaw(limit):
 
 
 def main():
-    #print 'Calculating prime numbers raw until ' + str(arg) + '...'
-    #primes = findPrimesRaw(arg)
-    #print '...done!'
-
     print 'Calculating prime numbers Eratosthenes until ' + str(arg) + '...'
     primes = findHighestFactorPrimeEratosthenes(arg)
     print '...done!'
